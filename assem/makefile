@@ -5,6 +5,13 @@ OUT2 = "test2"
 # 	gcc -g -O0 -o $(OUT) frame.c
 # 	gcc -g -O2 -o $(OUT2) frame.c
 
-fr: fr.s
-	nasm -g -F dwarf -f elf64 -o $@.o $<
-	ld -o $(OUT) $@.o
+# fr: fr.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+# address: address.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+addr: addr.c
+	gcc -g -O0 -o $(OUT) addr.c
