@@ -13,5 +13,9 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-addr: addr.c
-	gcc -g -O0 -o $(OUT) addr.c
+# addr: addr.c
+# 	gcc -g -O0 -o $(OUT) addr.c
+
+var: var.s
+	nasm -g -F dwarf -f elf64 -o $@.o $<
+	ld -o $(OUT) $@.o
