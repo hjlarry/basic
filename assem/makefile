@@ -16,6 +16,10 @@ OUT2 = "test2"
 # addr: addr.c
 # 	gcc -g -O0 -o $(OUT) addr.c
 
-var: var.s
+# var: var.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+bss: bss.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
