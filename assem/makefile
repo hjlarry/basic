@@ -24,6 +24,10 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-times: times.s
+# times: times.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+equ: equ.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
