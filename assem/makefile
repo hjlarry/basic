@@ -40,10 +40,13 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-str: str.s
+# str: str.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+array: array.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
-
 
 clean:
 	-rm *.o
