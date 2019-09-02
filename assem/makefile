@@ -28,6 +28,16 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-equ: equ.s
+# equ: equ.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+cmp: cmp.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
+
+clean:
+	-rm *.o
+	-rm $(OUT) $(OUT2)
+
+.PHONY: clean
