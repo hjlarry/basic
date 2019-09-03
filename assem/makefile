@@ -44,7 +44,11 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-array: array.s
+# array: array.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+struct: struct.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
 
