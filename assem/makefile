@@ -52,10 +52,13 @@ OUT2 = "test2"
 # 	nasm -g -F dwarf -f elf64 -o $@.o $<
 # 	ld -o $(OUT) $@.o
 
-define: define.s
+# define: define.s
+# 	nasm -g -F dwarf -f elf64 -o $@.o $<
+# 	ld -o $(OUT) $@.o
+
+macro: macro.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	ld -o $(OUT) $@.o
-
 
 clean:
 	-rm *.o
