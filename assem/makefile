@@ -64,6 +64,10 @@ libc: libc.s
 	nasm -g -F dwarf -f elf64 -o $@.o $<
 	gcc -no-pie -o $(OUT) $@.o
 
+add: add.s
+	nasm -g -F dwarf -f elf64 -o $@.o $<
+	gcc -no-pie -o $(OUT) $@.o
+
 clean:
 	-rm *.o
 	-rm $(OUT) $(OUT2)
