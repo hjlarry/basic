@@ -18,7 +18,7 @@ func main() {
 /*
 二、退化赋值示例
 反汇编技巧：编译时使用默认的优化模式，但源码中针对某个方法定义禁止内联，这样这个方法就成了一个标志，方便查找和阅读
-*/
+
 
 //go:noinline
 func test() (int, int) {
@@ -30,4 +30,23 @@ func main() {
 	println(a, x)
 	b, x := test()
 	println(b, x)
+}
+*/
+
+/*
+三、多变量赋值示例
+反汇编证明多变量赋值和分别赋值是一样的速度
+*/
+
+//go:noinline
+//go:nosplit
+func test() (int, int) {
+	a, b := 1, 2
+	a, b = b+1, a+2
+	return a, b
+}
+
+func main() {
+	a, b := test()
+	println(a, b)
 }
