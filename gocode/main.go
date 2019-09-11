@@ -55,10 +55,53 @@ func main() {
 /*
 四、 动态修改字符串变量
 go build -ldflags "-X main.BuildTime=$(date +'%Y.%m.%d')"
-*/
+
 
 var BuildTime string
 
 func main() {
 	println(BuildTime)
 }
+*/
+
+/*
+五、 空标识符的本质
+
+//go:noinline
+//go:nosplit
+func test() (int, int) {
+	return 1, 2
+}
+func main() {
+	x := 100
+	_ = x
+	a, _ := test()
+	println(a)
+}
+*/
+
+/*
+六、 空标识符的使用场景
+检测X是否实现了Xer接口中的方法
+
+[ubuntu] ~/.mac/gocode $ go build -gcflags "-N -l"
+# _/root/.mac/gocode
+./main.go:92:5: cannot use X(0) (type X) as type Xer in assignment:
+	X does not implement Xer (missing A method)
+
+
+
+type Xer interface {
+	A()
+}
+
+type X int
+
+// func (x X) A() {}
+
+var _ Xer = X(0)
+
+func main() {
+
+}
+*/
