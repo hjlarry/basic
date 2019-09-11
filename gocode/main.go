@@ -36,7 +36,7 @@ func main() {
 /*
 三、多变量赋值示例
 反汇编证明多变量赋值和分别赋值是一样的速度
-*/
+
 
 //go:noinline
 //go:nosplit
@@ -49,4 +49,16 @@ func test() (int, int) {
 func main() {
 	a, b := test()
 	println(a, b)
+}
+*/
+
+/*
+四、 动态修改字符串变量
+go build -ldflags "-X main.BuildTime=$(date +'%Y.%m.%d')"
+*/
+
+var BuildTime string
+
+func main() {
+	println(BuildTime)
 }
