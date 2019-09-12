@@ -1,9 +1,5 @@
 package main
 
-import (
-	"unsafe"
-)
-
 /*
 一、同名遮蔽示例
 var x = 100
@@ -112,7 +108,7 @@ func main() {
 
 /*
 七、 常量
-*/
+
 
 const x, s = 1, "abc"
 
@@ -130,4 +126,39 @@ func main() {
 		c int = 1 * int(unsafe.Sizeof("abc"))
 		b
 	)
+}
+*/
+
+/*
+八、 枚举
+*/
+
+const (
+	_  = iota
+	KB = 1 << (10 * iota)
+	MB
+	GB
+)
+
+type color byte
+
+const (
+	black color = iota
+	red
+	blue
+)
+
+func test(c color) {
+	println(c)
+}
+
+func main() {
+	println(KB, MB, GB)
+
+	test(red)
+	test(100) // 100是字面量，若未超过类型byte的范围，会被隐式转换为相应的类型
+
+	x := 2
+	// test(x) // x则被限制传入枚举类型，说明不允许对变量做隐式转换
+	test(color(x)) // 显示转换合法
 }
