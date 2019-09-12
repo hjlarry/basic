@@ -1,5 +1,9 @@
 package main
 
+import (
+	"unsafe"
+)
+
 /*
 一、同名遮蔽示例
 var x = 100
@@ -105,3 +109,25 @@ func main() {
 
 }
 */
+
+/*
+七、 常量
+*/
+
+const x, s = 1, "abc"
+
+func main() {
+	const a = 1
+	{
+		const a = "abc"
+		println(a)
+	}
+	println(a)
+	const x int32 = 100
+	const s uintptr = unsafe.Sizeof(0)
+	const n int = len("abc")
+	const (
+		c int = 1 * int(unsafe.Sizeof("abc"))
+		b
+	)
+}
