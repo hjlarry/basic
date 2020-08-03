@@ -79,3 +79,23 @@ void srand(unsigned int seed)
 {
     next = seed;
 }
+
+/*
+自增自减：
+分为前缀自增 ++n 和后缀自增 n++，假设n=5，
+x = ++n 则x为6，n为6
+x = n++ 则x为5，n为6
+*/
+// 移除s中所有的c
+void squeeze(char s[], int c)
+{
+    int i, j;
+    for (i = j = 0; s[i] != '\0'; i++)
+    {
+        if (s[i] != c)
+        {
+            s[j++] = s[i]; // 相当于 s[j] = s[i] ; j++;
+        }
+    }
+    s[j] = '\0';
+}
