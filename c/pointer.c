@@ -15,3 +15,25 @@ ip = &z[0]; // ip now points to z[0]
 
 ++*ip;
 (*ip)++; // 不用括号则先算ip++再用*指向
+
+/*
+二、 指针和函数参数
+因为函数的参数都是引用传递，所以如下的swap写法是错误的，应该使用指针的写法
+*/
+// 错误写法
+void swap(int x, int y)
+{
+    int tmp;
+    tmp = x;
+    x = y;
+    y = tmp;
+}
+
+// 正确写法
+void swap(int *x, int *y)
+{
+    int tmp;
+    tmp = *x;
+    *x = *y;
+    *y = tmp;
+}
