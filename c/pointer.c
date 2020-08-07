@@ -78,3 +78,51 @@ int str_len(char *s)
 }
 // 函数定义中 char s[]和 char *s是等价的，我们更愿意用指针的形式，它更直观的表明传入了一个指针参数，数组名传入函数实际上就是传入数组第一个元素的地址。
 // 也可以向函数传入子数组，例如  f(&a[2])  就是传入了子数组的地址，传入之后也可以在f内部使用p[-1]这样的表达式，只要没有越界就行。
+
+/*
+四、 地址运算
+将指针、数组和地址的算术运算集成在一起是C语言的一大优点。
+指针与整数不能相互转换，但0是例外，可以用来和指针比较。程序中经常用符号常量NULL代替0，更清晰的说明它是指针。
+有效的指针运算包括：
+* 相同类型指针之间的赋值运算
+* 指针同整数之间的加法、减法运算
+* 指向相同数组中元素的两个指针之间的减法或比较运算
+* 将指针赋值给0或指针与0之间的比较运算
+其他形式的指针运算都是非法的。
+*/
+
+#define ALLOCSIZE 1000           // 可用空间大小
+static char allocbuf[ALLOCSIZE]; // 分配区域
+static char *allocp = allocbuf;  // 下一个空闲的位置
+
+// 返回指向n个字符的指针
+char *alloc(int n)
+{
+    if (allocbuf + ALLOCSIZE - allocp >= n) // 判断有空闲空间
+    {
+        allocp += n;
+        return allocp - n; // 返回分配前的指针地址
+    }
+    else // 空闲空间不够
+        return 0;
+}
+
+// 释放p指向的存储区域
+void afree(char *p)
+{
+    if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
+    {
+        allocp = p;
+    }
+}
+
+// 另一种字符串长度的写法
+int str_len2(char *s)
+{
+    char *p = s;
+    while (*p != '\0')
+    {
+        p++;
+    }
+    return p - s;
+}
