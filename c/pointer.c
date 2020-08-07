@@ -126,3 +126,65 @@ int str_len2(char *s)
     }
     return p - s;
 }
+
+/*
+五、指针和字符串
+printf("hello world");
+当我们向函数中传递一个字符串常量，函数printf本质上是接收一个指向字符数组第一个字符的指针。
+
+char amessage[] = "hello world"; // 定义了一个数组，它能存放双引号+'\0'，可修改数组中的单个字符
+char *pmessage = "hello world"; // 定义了一个指针指向字符串常量，只能修改指针指向其他地址，但如果修改某个字符会提示未定义
+*/
+
+// 实现字符串拷贝的功能，不能用s=t，因为这只是拷贝了一个指针
+// 版本一、数组下标实现
+void strcpy1(char *s, char *t)
+{
+    int i = 0;
+    while ((s[i] = t[i]) != '\0')
+        i++;
+}
+
+// 版本二、使用指针实现
+void strcpy2(char *s, char *t)
+{
+    while ((*s = *t) != '\0')
+    {
+        s++;
+        t++;
+    }
+}
+
+// 版本三、自增放在循环中
+void strcpy3(char *s, char *t)
+{
+    while ((*s++ = *t++) != '\0')
+        ;
+}
+
+// 版本四、和'\0'的比较是多于的，只需判断表达式的值是否为0即可，但编译器会报个警告
+void strcpy4(char *s, char *t)
+{
+    while (*s++ = *t++)
+        ;
+}
+
+// 字符串比较函数，小于、等于、大于t分别返回负整数、0、正整数
+// 版本一、数组实现
+int strcmp1(char *s, char *t)
+{
+    int i;
+    for (i = 0; s[i] == t[i]; i++)
+        if (s[i] == '\0')
+            return 0;
+    return s[i] - t[i];
+}
+
+// 版本二、指针实现
+int strcmp2(char *s, char *t)
+{
+    for (; *s == *t; s++, t++)
+        if (*s == '\0')
+            return 0;
+    return *s - *t;
+}
