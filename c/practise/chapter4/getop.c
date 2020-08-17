@@ -10,9 +10,9 @@ int getop(char s[])
     while ((s[0] = c = getch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
+    i = 0;
     if (!isdigit(c) && c != '.') // 说明下一个字符不是数
         return c;
-    i = 0;
     if (isdigit(c)) // 收集整数部分
         while (isdigit(s[++i] = c = getch()))
             ;

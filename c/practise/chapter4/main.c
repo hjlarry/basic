@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> //提供atof函数
+#include <math.h>
 #include "calc.h"
 
 #define MAXOP 100 //操作数或运算符的最大长度
@@ -10,6 +11,11 @@
 使用：  ./a.out
 1 2 - 4 5 + *
 该程序从用户输入中一个个读取字符，如果是数字则压入一个栈，如果是符号则出栈
+*/
+
+/*
+4-3、加入取模运算符，注意考虑负数的情况
+取模使用fmod函数以支持浮点数，负数处理还有些问题
 */
 int main()
 {
@@ -38,6 +44,13 @@ int main()
             op2 = pop();
             if (op2 != 0.0)
                 push(pop() / op2);
+            else
+                printf("error: zero divisor \n");
+            break;
+        case '%':
+            op2 = pop();
+            if (op2 != 0.0)
+                push(fmod(pop(), op2));
             else
                 printf("error: zero divisor \n");
             break;
