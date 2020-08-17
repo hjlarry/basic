@@ -2,14 +2,23 @@
 #include <stdlib.h> //提供atof函数
 #include "calc.h"
 
-#define MAXOP 100  //操作数或运算符的最大长度
+#define MAXOP 100 //操作数或运算符的最大长度
 
-int main(){
+// 逆波兰计算器
+/*
+编译： cc main.c stack.c getop.c getch.c calc.h
+使用：  ./a.out
+1 2 - 4 5 + *
+该程序从用户输入中一个个读取字符，如果是数字则压入一个栈，如果是符号则出栈
+*/
+int main()
+{
     int type;
     double op2;
     char s[MAXOP];
 
-    while((type=getop(s)) != EOF){
+    while ((type = getop(s)) != EOF)
+    {
         switch (type)
         {
         case NUMBER:
@@ -27,9 +36,9 @@ int main(){
             break;
         case '/':
             op2 = pop();
-            if (op2 != '0.0')
+            if (op2 != 0.0)
                 push(pop() / op2);
-            else 
+            else
                 printf("error: zero divisor \n");
             break;
         case '\n':
