@@ -11,6 +11,15 @@ int getop(char s[])
         ;
     s[1] = '\0';
     i = 0;
+    if (islower(c))
+    {
+        while (islower(s[++i] = c = getch()))
+            ;
+        s[i] = '\0';
+        if (c != EOF)
+            ungetch(c);
+        return NAME;
+    }
     if (!isdigit(c) && c != '.') // 说明下一个字符不是数
         return c;
     if (isdigit(c)) // 收集整数部分

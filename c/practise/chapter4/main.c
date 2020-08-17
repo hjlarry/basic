@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> //提供atof函数
 #include <math.h>
+#include <string.h>
 #include "calc.h"
 
 #define MAXOP 100 //操作数或运算符的最大长度
@@ -24,6 +25,12 @@
 复制栈顶元素
 交换栈顶两个元素的值
 清空栈
+这部分修改在stack.c
+*/
+
+/*
+4-5、给计算器添加sin、exp与pow等函数
+这部分修改在main中添加了mathfunc，在getop中去识别sin、exp、pow
 */
 int main()
 {
@@ -37,6 +44,9 @@ int main()
         {
         case NUMBER:
             push(atof(s));
+            break;
+        case NAME:
+            mathfunc(s);
             break;
         case '+':
             push(pop() + pop());
@@ -71,4 +81,22 @@ int main()
         }
     }
     return 0;
+}
+
+void mathfunc(char s[])
+{
+    double op2;
+    if (strcmp(s, "sin") == 0)
+        push(sin(pop()));
+    else if (strcmp(s, "cos") == 0)
+        push(cos(pop()));
+    else if (strcmp(s, "exp") == 0)
+        push(exp(pop()));
+    else if (strcmp(s, "pow") == 0)
+    {
+        op2 = pop();
+        push(pow(pop(), op2));
+    }
+    else
+        printf("error: %s not supported \n", s);
 }
