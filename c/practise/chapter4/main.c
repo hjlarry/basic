@@ -32,6 +32,10 @@
 4-5、给计算器添加sin、exp与pow等函数
 这部分修改在main中添加了mathfunc，在getop中去识别sin、exp、pow
 */
+
+/*
+4-11、修改getop，使其不必使用ungetch函数
+*/
 int main()
 {
     int type;
