@@ -2,6 +2,8 @@
 cc 5-7.c
 ./a.out < input.txt
 以下是书中提供的函数。
+
+题目要求：重写readlines，将输入的文本存储到main中的数组，而不是alloc的存储空间。看看函数的运行速度比改写前快多少？
 */
 
 #include <stdio.h>
@@ -12,7 +14,7 @@ cc 5-7.c
 
 char *lineptr[MAXLINES];
 
-int readlines(char *lineptr[], int maxlines);
+int readlines(char *lineptr[], char *line_storage, int maxlines);
 void writelines(char *lineptr[], int nlines);
 void qsort(char *lineptr[], int left, int right);
 
@@ -20,7 +22,8 @@ void qsort(char *lineptr[], int left, int right);
 int main()
 {
     int nlines;
-    if ((nlines = readlines(lineptr, MAXLINES)) >= 0)
+    char line_storage[MAXLINES];
+    if ((nlines = readlines(lineptr, line_storage, MAXLINES)) >= 0)
     {
         qsort(lineptr, 0, nlines - 1);
         writelines(lineptr, nlines);
@@ -36,21 +39,43 @@ int main()
 int get_line(char *, int);
 char *alloc(int);
 
-// 读取输入行
-int readlines(char *lineptr[], int maxlines)
+// 读取输入行，原方案：使用alloc
+// int readlines(char *lineptr[], int maxlines)
+// {
+//     int len, nlines;
+//     char *p, line[MAXLEN];
+//     nlines = 0;
+//     while ((len = get_line(line, MAXLEN)) > 0)
+//     {
+//         if (nlines >= maxlines || (p = alloc(len)) == NULL)
+//             return -1;
+//         else
+//         {
+//             line[len - 1] = '\0'; //删除换行符
+//             strcpy(p, line);
+//             lineptr[nlines++] = p;
+//         }
+//     }
+//     return nlines;
+// }
+// 读取输入行，使用5-7要求的方案
+int readlines(char *lineptr[], char *line_storage, int maxlines)
 {
     int len, nlines;
-    char *p, line[MAXLEN];
+    char *p, *linestop, line[MAXLEN];
+    p = line_storage;
+    linestop = p + maxlines;
     nlines = 0;
     while ((len = get_line(line, MAXLEN)) > 0)
     {
-        if (nlines >= maxlines || (p = alloc(len)) == NULL)
+        if (nlines >= maxlines || p + len > linestop)
             return -1;
         else
         {
             line[len - 1] = '\0'; //删除换行符
             strcpy(p, line);
             lineptr[nlines++] = p;
+            p += len;
         }
     }
     return nlines;
