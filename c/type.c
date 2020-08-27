@@ -17,13 +17,13 @@ short int sh;  这里的int可以省略，所以我们一般写short sh;
 常量的表达式往往是在编译期就计算出来的，例如int days[1+3+31+31];
 字符串常量就是字符数组，在内存上存储字符串时，会存储双引号之间的每一个字符，并在末尾多加一个字符'\0'，实际计算字符串长度时也会不去计算'\0'
 */
-#include <stdio.h>
-int y;
-int main()
-{
-    int x;
-    printf("%d", y);
-}
+// #include <stdio.h>
+// int y;
+// int main()
+// {
+//     int x;
+//     printf("%d", y);
+// }
 
 // int strlen(char s[])
 // {
@@ -140,4 +140,26 @@ Length *lengths[];
 
 typedef char *String;
 String p, alloc(int);
-p = (String)malloc(100);
+// p = (String)malloc(100);
+
+/*
+七、联合union
+联合和结构体的定义方式很相似，但联合体中各个成员共享同一块内存区域，修改一个成员对别的成员也有影响，可能就是节约内存的目的。
+*/
+#include <stdio.h>
+// 定义一个联合类型
+union data {
+    int ival;
+    short sval;
+    char cval;
+};
+
+// 定义其变量
+int main()
+{
+    union data d;
+    d.sval = 10000;
+    printf("%d \n", d.sval);
+    printf("%d \n", d.cval);
+    printf("%d \n", d.ival);
+}
