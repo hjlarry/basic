@@ -4,13 +4,21 @@
 tag被用来定义structure的实例
 */
 #include <stdio.h>
+// 相当于定义了一个模板，给模板起了个tag叫point
 struct point
 {
     int x;
     int y;
 };
-// 定义了一个变量pt
+// 定义了一个变量pt，要分配内存
 struct point pt;
+// 不使用tag，直接定义变量
+struct
+{
+    int x;
+} x, y;
+// 支持定义变量的同时初始化
+struct point maxpt = {300, 200};
 // 支持嵌套structure
 struct rect
 {
@@ -55,3 +63,13 @@ int main()
     printf("rect: %d \n", (r.pt1).x);
     printf("rect: %d \n", (rp->pt1).x);
 }
+
+/*
+三、 struct和数组
+参考程序 chapter6/getword_arr.c
+
+四、 struct和指针
+参考程序 chapter6/getword_ptr.c
+
+五、 struct可以自引用，例如树的节点
+*/
