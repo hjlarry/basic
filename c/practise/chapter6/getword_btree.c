@@ -8,21 +8,22 @@
 
 #define MAXWORD 100
 
-struct tnode
+typedef struct tnode *TreePtr;
+typedef struct tnode
 {
     char *word;
     int count;
-    struct tnode *left;
-    struct tnode *right;
-};
+    TreePtr left;
+    TreePtr right;
+} TreeNode;
 
-struct tnode *addtree(struct tnode *, char *);
-void treeprint(struct tnode *);
+TreePtr addtree(TreePtr, char *);
+void treeprint(TreePtr);
 int getword(char *, int);
 
 int main()
 {
-    struct tnode *root;
+    TreePtr root;
     char word[MAXWORD];
     root = NULL;
     while (getword(word, MAXWORD) != EOF)
@@ -34,13 +35,12 @@ int main()
 
 char *str_dup(char *);
 
-struct tnode *
-addtree(struct tnode *p, char *w)
+TreePtr addtree(TreePtr p, char *w)
 {
     int cond;
     if (p == NULL)
     { // 新单词，创建一个新节点，并分配内存
-        p = (struct tnode *)malloc(sizeof(struct tnode));
+        p = (TreePtr)malloc(sizeof(TreeNode));
         p->word = str_dup(w);
         p->count = 1;
         p->left = p->right = NULL;
@@ -60,7 +60,7 @@ addtree(struct tnode *p, char *w)
     return p;
 }
 
-void treeprint(struct tnode *t)
+void treeprint(TreePtr t)
 {
     if (t != NULL)
     {

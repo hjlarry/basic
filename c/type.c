@@ -129,3 +129,15 @@ unsigned getbits(unsigned x, int p, int n)
     // ~0 << n将~0 先左移n位，然后就建立了最右边n位全为1的屏蔽码
     return (x >> (p + 1 - n)) & ~(~0 << n);
 }
+
+/*
+六、类型定义typedef：
+一方面是建立了更具意义的类型名称，另外也可提高程序的可移植性，比如数据类型和机器有关时，移植后只需改变typedef选择一组合适的short、int、long等
+*/
+typedef int Length;
+Length len, maxlen;
+Length *lengths[];
+
+typedef char *String;
+String p, alloc(int);
+p = (String)malloc(100);
