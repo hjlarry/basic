@@ -132,10 +132,56 @@ int sscanf(char *string, char *format, arg1, arg2, ...)
 //         printf("\t%.2f\n", sum += v);
 // }
 
-int main()
+// int main()
+// {
+//     int day, year;
+//     char monthname[20];
+//     sscanf("25 Dec 1985", "%d %s %d", &day, monthname, &year);
+//     printf("%d %s %d \n", year, monthname, day);
+// }
+
+/*
+四、 文件访问
+访问文件需要通过操作系统提供的文件指针，该指针指向一个包含文件信息的结构，这些信息有：
+缓冲区的位置、缓冲区中当前字符的位置、文件的读或写状态、是否出错或是否到达文件结尾等。
+在stdio.h中已经定义了这个结构FILE，可以声明或使用函数返回这样一个指针:
+FILE *fp;
+FILE *fopen(char *name, char *mode);
+
+有了文件指针，对文件的读写可以用:
+int getc(FILE *fp);
+int putc(int c, FILE *fp);
+格式化输入输出还可以用:
+int fscanf(FILE *fp, char *format, ...)
+int fprintf(FILE *fp, char *format, ...)
+*/
+
+// 一个类似cat的程序，支持通过名字访问多个文件
+// ./a.out a.txt b.txt
+int main(int argc, char *argv[])
 {
-    int day, year;
-    char monthname[20];
-    sscanf("25 Dec 1985", "%d %s %d", &day, monthname, &year);
-    printf("%d %s %d \n", year, monthname, day);
+    FILE *fp;
+    void filecopy(FILE *, FILE *);
+
+    if (argc == 1)
+        filecopy(stdin, stdout);
+    else
+        while (--argc > 0)
+            if ((fp = fopen(*++argv, "r")) == NULL)
+            {
+                printf("can`t open %s \n", *argv);
+                return 1;
+            }
+            else
+            {
+                filecopy(fp, stdout);
+                fclose(fp);
+            }
+}
+
+void filecopy(FILE *ifp, FILE *ofp)
+{
+    int c;
+    while ((c = getc(ifp)) != EOF)
+        putc(c, ofp);
 }
