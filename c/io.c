@@ -109,7 +109,33 @@ printf中的转义字符，都表示一个ASCII字符：
 
 */
 
+// int main()
+// {
+//     printf("hello \t world %2.2f\n", 12345.12345678);
+// }
+
+/*
+三、 格式化输入
+int scanf(*format, ...)
+该函数从标准输入中读取字符序列，按format的格式对字符序列进行解析，并把结果保存到其余的参数中。
+当它扫描完或碰到部分输入无法解析的情况，则函数终止，返回已匹配的个数。到达文件末尾则返回EOF
+
+int sscanf(char *string, char *format, arg1, arg2, ...)
+这个函数是扫描字符串string，匹配的结果分别保存到arg1、arg2等参数中
+*/
+
+// int main()
+// {
+//     double sum, v;
+//     sum = 0;
+//     while (scanf("%lf", &v) == 1)
+//         printf("\t%.2f\n", sum += v);
+// }
+
 int main()
 {
-    printf("hello \t world %2.2f\n", 12345.12345678);
+    int day, year;
+    char monthname[20];
+    sscanf("25 Dec 1985", "%d %s %d", &day, monthname, &year);
+    printf("%d %s %d \n", year, monthname, day);
 }
