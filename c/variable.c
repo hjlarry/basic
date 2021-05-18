@@ -43,6 +43,37 @@ int main()
 }
 
 /*
+三、 局部变量
+默认局部变量的生命周期仅限当前栈帧，或某个更小的作用域
+如果添加static修饰，存储位置变为.data或.bss，并持有最后一次的值
+*/
+int test()
+{
+    int xx = 0x11;
+    static int yy = 0x22;
+    ++xx;
+    ++yy;
+    return 0;
+}
+/*
+~/basic/c(master*) » objdump -dS -M intel ./a.out | grep -A 20 "<test>"
+0000000000401150 <test>:
+  401150:       55                      push   rbp
+  401151:       48 89 e5                mov    rbp,rsp
+  401154:       c7 45 fc 11 00 00 00    mov    DWORD PTR [rbp-0x4],0x11
+  40115b:       83 45 fc 01             add    DWORD PTR [rbp-0x4],0x1
+  40115f:       8b 05 d3 2e 00 00       mov    eax,DWORD PTR [rip+0x2ed3]        # 404038 <yy.2366>
+  401165:       83 c0 01                add    eax,0x1
+  401168:       89 05 ca 2e 00 00       mov    DWORD PTR [rip+0x2eca],eax        # 404038 <yy.2366>
+  40116e:       b8 00 00 00 00          mov    eax,0x0
+  401173:       5d                      pop    rbp
+  401174:       c3                      ret    
+  401175:       66 2e 0f 1f 84 00 00    nop    WORD PTR cs:[rax+rax*1+0x0]
+  40117c:       00 00 00 
+  40117f:       90                      nop
+*/
+
+/*
 二、 外部变量
 C语言程序可以看做由一系列外部对象构成的，外部变量就是定义在函数之外的对象，它可以被多个函数使用。
 函数内没法定义别的函数，因此函数也是外部的。
