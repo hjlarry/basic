@@ -5,25 +5,41 @@
 我们可以定义（define）或声明（declare）一个变量。定义有明确内存分配行为，依照类型决定大小，或赋予初始值；声明则向编译器说明目标信息，如名字、类型和参数等。但不一定会为其分配内存，因为它或许已在某处定义过，声明只是告知该如何使用而已。显然，定义是声明的一种，反之则不然。
 */
 
-#include <assert.h>
+// #include <assert.h>
+// #include <stdio.h>
+
+// int main()
+// {
+//     // 可以在一行中定义多个变量，但其类型可能不同
+//     char *p, c;
+//     static_assert(sizeof(p) == 8, "指针类型长度应该为8");
+//     static_assert(sizeof(c) == 1, "字符类型长度应该为1");
+//     int x, y[3], z[15][3]; // int, int[3], int[15][3]
+
+//     // 并不强制要求变量初始化，但其结果也是不可预知的
+//     int *q;
+//     // printf("%d\n", *q); // Segmentation fault
+
+//     // 变量总是按值传递，赋值传参时就要去考虑是复制目标对象好还是复制其指针好
+//     int xx = 1;
+//     int yy = xx;
+//     assert(&xx != &yy);
+// }
+
+/*
+二、 全局变量
+按是否有初始化值，分配在.data段或.bss段
+默认可被全局访问，添加static修饰符可限定其在当前模块内使用
+修饰符只影响其作用域，而不影响其内存分配的方式，应该尽量减少可被外部访问的全局变量
+*/
 #include <stdio.h>
+int x = 0x11;        // .data
+static int y = 0x22; // .data
+int z;               // .bss   (zero-value)
 
 int main()
 {
-    // 可以在一行中定义多个变量，但其类型可能不同
-    char *p, c;
-    static_assert(sizeof(p) == 8, "指针类型长度应该为8");
-    static_assert(sizeof(c) == 1, "字符类型长度应该为1");
-    int x, y[3], z[15][3]; // int, int[3], int[15][3]
-
-    // 并不强制要求变量初始化，但其结果也是不可预知的
-    int *q;
-    // printf("%d\n", *q); // Segmentation fault
-
-    // 变量总是按值传递，赋值传参时就要去考虑是复制目标对象好还是复制其指针好
-    int xx = 1;
-    int yy = xx;
-    assert(&xx != &yy);
+    printf("%d, %d, %d\n", x, y, z);
 }
 
 /*
