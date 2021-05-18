@@ -1,7 +1,30 @@
 /*
 一、 变量
-定义变量是指变量在什么地方创建和分配内存的，而extern声明变量只是告诉编译器这个变量在其他地方被定义了
+变量（variable）与对象（object）联系在一起。
+对象是执行期间的存储区域，其内容表示值（value），以特定类型（type）进行解释。变量则是对象外在身份，用以描述对象基本信息，诸如内存地址、数据类型，以及作用域等。对象可通过类型转换或多态方式拥有不同身份。
+我们可以定义（define）或声明（declare）一个变量。定义有明确内存分配行为，依照类型决定大小，或赋予初始值；声明则向编译器说明目标信息，如名字、类型和参数等。但不一定会为其分配内存，因为它或许已在某处定义过，声明只是告知该如何使用而已。显然，定义是声明的一种，反之则不然。
 */
+
+#include <assert.h>
+#include <stdio.h>
+
+int main()
+{
+    // 可以在一行中定义多个变量，但其类型可能不同
+    char *p, c;
+    static_assert(sizeof(p) == 8, "指针类型长度应该为8");
+    static_assert(sizeof(c) == 1, "字符类型长度应该为1");
+    int x, y[3], z[15][3]; // int, int[3], int[15][3]
+
+    // 并不强制要求变量初始化，但其结果也是不可预知的
+    int *q;
+    // printf("%d\n", *q); // Segmentation fault
+
+    // 变量总是按值传递，赋值传参时就要去考虑是复制目标对象好还是复制其指针好
+    int xx = 1;
+    int yy = xx;
+    assert(&xx != &yy);
+}
 
 /*
 二、 外部变量
@@ -15,7 +38,7 @@ extern是一个外部变量声明的关键字，使用它就可以自此声明�
 对于数组，定义时需要制定长度，声明则不需要。
 */
 
-#include <stdio.h>
+// #include <stdio.h>
 
 // 这个版本不使用外部变量完成
 // #define MAXLINE 1000 /* maximum input line length */
@@ -66,57 +89,57 @@ extern是一个外部变量声明的关键字，使用它就可以自此声明�
 // }
 
 // 这个版本不如正常的写法，外部变量太多易导致无意中修改而不好维护，也使函数不具有通用性。
-#define MAXLINE 1000 /* maximum input line length */
+// #define MAXLINE 1000 /* maximum input line length */
 
 // 定义变量
-int max;               /*maximum length seen so far */
-char line[MAXLINE];    /* current input line */
-char longest[MAXLINE]; /* longest line saved here */
+// int max;               /*maximum length seen so far */
+// char line[MAXLINE];    /* current input line */
+// char longest[MAXLINE]; /* longest line saved here */
 
-int get_line();
-void copy();
-/* print the longest input line */
-int main()
-{
-    int len; /* current line length */
-    // 声明变量
-    extern int max;
-    extern char longest[];
-    max = 0;
-    while ((len = yyyyyyyy()) > 0)
-        if (len > max)
-        {
-            max = len;
-            copy();
-        }
-    if (max > 0) /*therewasaline*/
-        printf("%s", longest);
-    return 0;
-}
+// int get_line();
+// void copy();
+// /* print the longest input line */
+// int main()
+// {
+//     int len; /* current line length */
+//     // 声明变量
+//     extern int max;
+//     extern char longest[];
+//     max = 0;
+//     while ((len = yyyyyyyy()) > 0)
+//         if (len > max)
+//         {
+//             max = len;
+//             copy();
+//         }
+//     if (max > 0) /*therewasaline*/
+//         printf("%s", longest);
+//     return 0;
+// }
 
-int get_line()
-{
-    int c, i;
-    extern char line[];
-    for (i = 0; i < MAXLINE - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
-        line[i] = c;
-    if (c == '\n')
-    {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = '\0';
-    return i;
-}
+// int get_line()
+// {
+//     int c, i;
+//     extern char line[];
+//     for (i = 0; i < MAXLINE - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+//         line[i] = c;
+//     if (c == '\n')
+//     {
+//         line[i] = c;
+//         ++i;
+//     }
+//     line[i] = '\0';
+//     return i;
+// }
 
-void copy()
-{
-    int i;
-    extern char line[], longest[];
-    i = 0;
-    while ((longest[i] = line[i]) != '\0')
-        ++i;
-}
+// void copy()
+// {
+//     int i;
+//     extern char line[], longest[];
+//     i = 0;
+//     while ((longest[i] = line[i]) != '\0')
+//         ++i;
+// }
 
 /*
 三、 头文件
