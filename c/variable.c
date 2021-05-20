@@ -100,20 +100,20 @@ int test()
 */
 
 // 作用域可以嵌套，内部标识符可以遮蔽外部同名标识符。
-#include <stdio.h>
-char *x = "abc";
+// #include <stdio.h>
+// char *x = "abc";
 
-int main(void)
-{
-    printf("%p, %s\n", x, x); // global.x : 0x402004, abc
-    int x = 100;
-    printf("%p, %d\n", &x, x); // local.x : 0x7ffea1aafd70, 100
-    {
-        float x = 1.0;
-        printf("%p, %f\n", &x, x); // inner.x : 0x7ffea1aafd74, 1.000000
-    }
-    printf("%p, %d\n", &x, x); // local.x : 0x7ffea1aafd70, 100
-}
+// int main(void)
+// {
+//     printf("%p, %s\n", x, x); // global.x : 0x402004, abc
+//     int x = 100;
+//     printf("%p, %d\n", &x, x); // local.x : 0x7ffea1aafd70, 100
+//     {
+//         float x = 1.0;
+//         printf("%p, %f\n", &x, x); // inner.x : 0x7ffea1aafd74, 1.000000
+//     }
+//     printf("%p, %d\n", &x, x); // local.x : 0x7ffea1aafd70, 100
+// }
 
 /*
 七、生命周期
@@ -145,6 +145,24 @@ _Thread_local：线程局部对象。
 | 宏                 |          |  文件  |          | 内链接   |
 +--------------------+----------+--------+----------+----------+
 */
+
+/*
+八、 常量
+常量值被编译器直接充作指令操作数，或存储到只读段（.rodata）内，在运行过程中恒定不变。
+常量表达式在编译期计算，其操作数可以是整数、浮点数、枚举、字符、字符串等字面量，以及强制类型转换、sizeof 运算符和其他常量表达式。
+字面量（literal）是源代码中表示固定值的符号，比如 123、'a' 和 "hello" 等。
+*/
+
+// 常量可以通过预处理指令#define定义，或者const定义
+#include <stdio.h>
+#define MIN 0 // 不能以分号结尾。
+const int MAX = 100;
+
+int main(void)
+{
+    printf("%d, %d\n", MIN, MAX);
+    return 0;
+}
 
 /*
 三、 头文件
